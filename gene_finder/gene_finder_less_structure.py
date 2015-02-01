@@ -21,20 +21,20 @@ def find_ORF(dna):
     """
     start = "ATG"
     r_ORF = []
-    flag = 1
-    while flag == 1:
+    while True: #looping to find every ORF
         #Finds start codon
-        if start in dna:
-            start_index = dna.index(start)
-            new_ORF = dna[start_index:len(dna)] #new ORF
+        if start in dna: #checks to make sure start codon can be found
+            start_index = dna.index(start) #find index of ATG
+            new_ORF = dna[start_index:len(dna)] #new ORF, placeholder type
             #check every three indices after for TAG TGA TAA
-            for x in range(3, len(new_ORF), 3):
+            for x in range(3, len(new_ORF), 3): 
                 if new_ORF[x:x+3] == "TAG" or new_ORF[x:x+3] == "TGA" or new_ORF[x:x+3] == "TAA":
                     r_ORF.append(new_ORF[0:x]) #add to array new ORF
                     dna = new_ORF[x+3:len(new_ORF)] #replace dna with 
                     break
-        else:
+        else: #if start can't be found, finish
             return r_ORF
+    #note: could change new_ORF to dna? look it over again
 
 def find_reverse_complement(dna):
     """ Finds complementary strand to input (doesn't reverse it)
@@ -44,9 +44,9 @@ def find_reverse_complement(dna):
     >>> find_complement("ATCG")
     'CGAT'
     """
-    dna = dna[::-1]
+    dna = dna[::-1] #reverse string
     new = ""
-    for x in range(0, len(dna)):
+    for x in range(0, len(dna)): #check for compliment
         print dna[x]
         if dna[x] == 'A':
             new = new + 'T'
@@ -56,7 +56,8 @@ def find_reverse_complement(dna):
             new = new + 'G'
         elif dna[x] == 'G':
             new = new + 'C'
-        else:
+        else: #change this so better error is returned, or make way to check 
+              #that string is viable
             return 'String is not possible DNA strand'
     return new
 
@@ -74,9 +75,7 @@ def find_all_ORFs_both_strands(dna):
     first_strand = find_ORF(dna)
     #find ORF for second strand (find reverse complement of dna)
     second_strand = find_ORF(find_reverse_complement(dna))
-    strands = []
-    strands = new.append(first_strand).append(second_strand)
-    return strands
+    return first_strand.append(second_strand)
 
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA and returns it
