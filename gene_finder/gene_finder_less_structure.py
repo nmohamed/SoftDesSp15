@@ -9,6 +9,8 @@ from amino_acids_less_structure import aa, codons
 import random
 from load import load_seq
 
+#TO DO: Add function that checks to make sure DNA string is actually DNA
+
 def find_ORF(dna):
     """ Takes a DNA sequence that is assumed to begin with a start codon and returns
         the sequence up to but not including the first in frame stop codon.  If there
@@ -56,9 +58,8 @@ def find_reverse_complement(dna):
             new = new + 'G'
         elif dna[x] == 'G':
             new = new + 'C'
-        else: #change this so better error is returned, or make way to check 
-              #that string is viable
-            return 'String is not possible DNA strand'
+        else: 
+            raise ValueError
     return new
 
 
