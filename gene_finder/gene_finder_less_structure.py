@@ -16,16 +16,15 @@ def find_ORF(dna):
         
         dna: a DNA sequence
         returns: the open reading frame represented as a string
-    >>> find_ORF("ATGTGAA")
-    ['ATG']
-    >>> find_ORF("ATGAGATAGG")
-    ['ATGAGA']
+    >>> find_ORF("ATGAGATAGGATGAAAAAATAA")
+    ['ATGAGA', 'ATGAAAAAA']
     """
     start = "ATG"
     r_ORF = []
-    try:
-        while True:
-            #Finds start codon
+    flag = 1
+    while flag == 1:
+        #Finds start codon
+        if start in dna:
             start_index = dna.index(start)
             new_ORF = dna[start_index:len(dna)] #new ORF
             #check every three indices after for TAG TGA TAA
@@ -34,21 +33,32 @@ def find_ORF(dna):
                     r_ORF.append(new_ORF[0:x]) #add to array new ORF
                     dna = new_ORF[x+3:len(new_ORF)] #replace dna with 
                     break
-    except: #because if index() can't find start it'll return an error
-        return r_ORF
+        else:
+            return r_ORF
 
-def find_complement(dna):
+def find_reverse_complement(dna):
     """ Finds complementary strand to input (doesn't reverse it)
 
         dna: a DNA sequence
         returns: the complementary strand of dna
     >>> find_complement("ATCG")
-    'TAGC'
+    'CGAT'
     """
-    new = dna.replace("A", "B").replace("T", "A").replace("B", "T")
-    h = new.replace("G", "P").replace("C", "G").replace("P", "C")
-    
-    return h
+    dna = dna[::-1]
+    new = ""
+    for x in range(0, len(dna)):
+        print dna[x]
+        if dna[x] == 'A':
+            new = new + 'T'
+        elif dna[x] == 'T':
+            new = new + 'A'
+        elif dna[x] == 'C':
+            new = new + 'G'
+        elif dna[x] == 'G':
+            new = new + 'C'
+        else:
+            return 'String is not possible DNA strand'
+    return new
 
 
 def find_all_ORFs_both_strands(dna):
@@ -63,10 +73,10 @@ def find_all_ORFs_both_strands(dna):
     #find ORF for first strand
     first_strand = find_ORF(dna)
     #find ORF for second strand (find reverse complement of dna)
-    second_strand = find_ORF(find_complement(dna[::-1]))
-
-    return first_strand.append(second_strand)
-
+    second_strand = find_ORF(find_reverse_complement(dna))
+    strands = []
+    strands = new.append(first_strand).append(second_strand)
+    return strands
 
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA and returns it
@@ -76,44 +86,36 @@ def longest_ORF(dna):
     """
     # TODO: implement this
     pass
-
-
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
         of the specfied DNA sequence
-        
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
     # TODO: implement this
-    pass
-
+pass
 def coding_strand_to_AA(dna):
-    """ Computes the Protein encoded by a sequence of DNA.  This function
+    """ Computes the Protein encoded by a sequence of DNA. This function
         does not check for start and stop codons (it assumes that the input
         DNA sequence represents an protein coding region).
-        
         dna: a DNA sequence represented as a string
         returns: a string containing the sequence of amino acids encoded by the
-                 the input DNA fragment
-
-        >>> coding_strand_to_AA("ATGCGA")
-        'MR'
-        >>> coding_strand_to_AA("ATGCCCGCTTT")
-        'MPA'
+        the input DNA fragment
+    >>> coding_strand_to_AA("ATGCGA")
+    'MR'
+    >>> coding_strand_to_AA("ATGCCCGCTTT")
+    'MPA'
     """
     # TODO: implement this
-    pass
-
+pass
 def gene_finder(dna, threshold):
     """ Returns the amino acid sequences coded by all genes that have an ORF
-        larger than the specified threshold.
-        
-        dna: a DNA sequence
-        threshold: the minimum length of the ORF for it to be considered a valid
-                   gene.
-        returns: a list of all amino acid sequences whose ORFs meet the minimum
-                 length specified.
+    larger than the specified threshold.
+    dna: a DNA sequence
+    threshold: the minimum length of the ORF for it to be considered a valid
+    gene.
+    returns: a list of all amino acid sequences whose ORFs meet the minimum
+    length specified.
     """
     # TODO: implement this
     pass
