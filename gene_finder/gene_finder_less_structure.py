@@ -47,7 +47,7 @@ def find_ORF(dna):
             return r_ORF
 
 def find_reverse_complement(dna):
-    """ Finds complementary strand to input and reverses
+    """ Reverses strand and finds complementary strand
 
         dna: a DNA sequence
         returns: the reverse complementary strand of dna
