@@ -5,11 +5,11 @@ Created on Jan 28 2015
 @author: Nora Mohamed
 
 """
-from amino_acids_less_structure import aa, codons
+from amino_acids import aa, codons, aa_table
 import random
 from load import load_seq
 
-#TO DO: Add function that checks to make sure DNA string is actually DNA
+#TO DO: Add function that checks to make sure DNA string is actually DNA?
 
 def find_ORF(dna):
     """ Takes a DNA sequence and returns every ORF, not including stop codons.
@@ -17,8 +17,8 @@ def find_ORF(dna):
         
         dna: a DNA sequence
         returns: all open reading frames represented as a string in array
-    >>> find_ORF("CATGAGATAGGATGAAAAAATAA")
-    ['ATGAGA', 'ATGAAAAAA']
+    >>> find_ORF("CATGAGATAGGATGAAA")
+    ['ATGAGA', 'ATGAAA']
     """
     start = "ATG"
     r_ORF = []
@@ -29,7 +29,7 @@ def find_ORF(dna):
             new_ORF = dna[start_index:len(dna)] #new ORF
 
             if new_ORF == "ATG":
-                r_ORF.append(new_ORF[0:x]) #if whats left is just "ATG"
+                r_ORF.append(new_ORF) #if whats left is just "ATG"
                 return r_ORF
 
             #check every three indices after for TAG TGA TAA
@@ -69,7 +69,6 @@ def find_reverse_complement(dna):
             raise ValueError
     return new
 
-
 def find_all_ORFs_both_strands(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence on both
         strands.
@@ -88,19 +87,40 @@ def find_all_ORFs_both_strands(dna):
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA and returns it
         as a string
-    >>> longest_ORF("ATGCGAATGTAGCATCAAA")
-    'ATGCTACATTCGCAT'
+    >>> longest_ORF("ATGAATTAA")
+    'ATGAAT'
     """
-    # TODO: implement this
-    pass
+    ORFs = find_all_ORFs_both_strands(dna)
+    if len(ORFs) > 1:
+        longest = max(ORFs, key=len)
+        return longest
+    elif len(ORFs) == 0: #if there were no ORFs
+        return "x"
+    elif len(ORFs) == 1: #if there was only one ORF
+        return ORFs[0]
+
+    #what should this do if they're the same length? and will there only be
+    #one ORF on each strand?
+
+def shuffle_string(s):
+    """ Shuffles the characters in the input string"""
+    return ''.join(random.sample(s,len(s)))
+
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
         of the specfied DNA sequence
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    # TODO: implement this
-pass
+
+    shuffled = []
+    for trial in range(0, num_trials):
+        dna = shuffle_string(dna)
+        shuffled.append(longest_ORF(dna))
+    longest = max(shuffled, key=len)
+    print "longest = " + longest
+    return longest
+
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA. This function
         does not check for start and stop codons (it assumes that the input
@@ -113,9 +133,18 @@ def coding_strand_to_AA(dna):
     >>> coding_strand_to_AA("ATGCCCGCTTT")
     'MPA'
     """
-    # TODO: implement this
-pass
-def gene_finder(dna, threshold):
+    #dna = longest_ORF_noncoding(dna, 20)
+    polymer = ""
+    for x in range(0, len(dna), 3):
+        if x + 3 > len(dna):
+            return polymer
+        else:
+            amino_acid = aa_table[dna[x:x+3]]
+            polymer = polymer + amino_acid
+    return polymer
+
+
+def gene_finder(dna):
     """ Returns the amino acid sequences coded by all genes that have an ORF
     larger than the specified threshold.
     dna: a DNA sequence
@@ -124,9 +153,45 @@ def gene_finder(dna, threshold):
     returns: a list of all amino acid sequences whose ORFs meet the minimum
     length specified.
     """
-    # TODO: implement this
-    pass
+    threshold = len(longest_ORF_noncoding(dna, 1500))  #divided by three for each codon
+    print "Threshold =", threshold
+    all_ORFs = find_all_ORFs_both_strands(dna)
+    #print all_ORFs
+
+    aas = []
+    pass_ORFs = []
+    for x in range(0, len(all_ORFs)): #translates to aa
+        if len(all_ORFs[x]) >= threshold:
+            pass_ORFs.append(all_ORFs[x])
+
+    for x in range(0, len(pass_ORFs)):
+        aas.append(coding_strand_to_AA(pass_ORFs[x]))
+
+    """
+    for x in range(0, len(aas)): #sees if aa sequence passes threshold
+        if len(aas[x]) >= threshold:
+            pass_aas.append(aas[x])
+            """
+    #print aas
+    print len(aas)
+    print aas
+    return aas
+
+
+
+from load import load_seq
+dna = load_seq("./data/X73525.fa")
+
+genes = gene_finder(dna)
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+"""
+MGIFASAGCGKTMLMHMLIEQTEADVFVIGLIGERGREVTEFVDMLRASHKKEKCVLVFATSDFPSVDRCNAAQLATTVAEYFRDQGKRVVLFIDSMTRYARALRDVALASGERPARRGYPASVFDNLPRLLERPGATSEGSITAFYTVLLESEEEADPMADEIRSILDGHLYLSRKLAGQGHYPAIDVLKSVSRVFGQVTTPTHAEQASAVRKLMTRLEELQLFIDLGEYRPGENIDNDRAMQMRDSLKAWLCQPVAQYSSFDDTLSGMNAFADQN
+MFYALYFEIHHLVASAALGFARVAPIFFFLPFLNSGVLSGAPRNAIIILVALGVWPHALNEAPPFLSVAMIPLVLQEAAVGVMLGCLLSWPFWVMHALGCIIDNQRGATLSSSIDPANGIDTSEMANFLNMFAAVVYLQNGGLVTMVDVLNKSYQLCDPMNECTPSLPPLLTFINQVAQNALVLASPVVLVLLLSEVFLGLLSRFAPQMNAFAISLTVKSGIAVLIMLLYFSPVLPDNVLRLSFQATGLSSWFYERGATHVLE
+
+MGDVSAVSSSGNILLPQQDEVGGLSEALKKAVEKHKTEYSGDKKDRDYGDAFVMHKETALPLLLAAWRHGAPAKSEHHNGNVSGLHHNGKSELRIAEKLLKVTAEKSVGLISAEAKVDKSAALLSSKNRPLESVSGKKLSADLKAVESVSEVTDNATGISDDNIKALPGDNKAIAGEGVRKEGAPLARDVAPARMAAANTGKPEDKDHKKVKDVSQLPLQPTTIADLSQLTGGDEKMPLAAQSKPMMTIFPTADGVKGEDSSLTYRFQRWGNDYSVNIQARQAGEFSLIPSNTQVEHRLHDQWQNGNPQRWHLTRDDQQNPQQQQHRQQSGEEDDA
+MADYSLAVFGIGLKYLIPFMLLCLVCSALPALLQAGFVLATEALKPNLSALNPVEGAKKLFSMRTVKDTVKTLLYLSSFVVAAIICWKKYKVEIFSQLNGNIVGIAVIWRELLLALVLTCLACALIVLLLDAIAEYFLTMKDMKMDKEEVKREMKEQEGNPEVKSKRREVHMEILSEQVKSDIENSRLIVANPTHITIGIYFKPELMPIPMISVYETNQRALAVRAYAEKVGVPVIVDIKLARSLFKTHRRYDLVSLEEIDEVLRLLVWLEEVENAGKDVIQPQENEVRH
+"""
