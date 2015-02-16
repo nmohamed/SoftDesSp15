@@ -143,6 +143,7 @@ def coding_strand_to_AA(dna):
             polymer = polymer + amino_acid
     return polymer
 
+<<<<<<< HEAD
 
 def gene_finder(dna):
     """ Returns the amino acid sequences coded by all genes that have an ORF
@@ -167,6 +168,13 @@ def gene_finder(dna):
     for x in range(0, len(pass_ORFs)):
         aas.append(coding_strand_to_AA(pass_ORFs[x]))
 
+=======
+def gene_finder(dna):
+    """ Returns the amino acid sequences that are likely coded by the specified dna
+        
+        dna: a DNA sequence
+        returns: a list of all amino acid sequences coded by the sequence dna.
+>>>>>>> 922a6e32441860ab0413630f74531e6e47a16a7c
     """
     for x in range(0, len(aas)): #sees if aa sequence passes threshold
         if len(aas[x]) >= threshold:
