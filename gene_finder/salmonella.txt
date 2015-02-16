@@ -1,23 +1,18 @@
 RESULTS:
 
 MGDVSAVSSSGNILLPQQDEVGGLSEALKKAVEKHKTEYSGDKKDRDYGDAFVMHKETALPLLLAAWRHGAPAKSEHHNGNVSGLHHNGKSELRIAEKLLKVTAEKSVGLISAEAKVDKSAALLSSKNRPLESVSGKKLSADLKAVESVSEVTDNATGISDDNIKALPGDNKAIAGEGVRKEGAPLARDVAPARMAAANTGKPEDKDHKKVKDVSQLPLQPTTIADLSQLTGGDEKMPLAAQSKPMMTIFPTADGVKGEDSSLTYRFQRWGNDYSVNIQARQAGEFSLIPSNTQVEHRLHDQWQNGNPQRWHLTRDDQQNPQQQQHRQQSGEEDDA
-
 On BLAST, this amino acid sequence resulted in finding "antigen presentation protein SpaN[Salmonella enterica]" that ranges from being 100% to 77% identical.
-
 SPAN: Surface presentation of antigens protein; Surface presentation of antigens protein (SPAN), also know as invasion protein invJ, is a Salmonella secretory pathway protein involved in presentation of determinants required for mammalian host cell invasion.
 
-
-
 MADYSLAVFGIGLKYLIPFMLLCLVCSALPALLQAGFVLATEALKPNLSALNPVEGAKKLFSMRTVKDTVKTLLYLSSFVVAAIICWKKYKVEIFSQLNGNIVGIAVIWRELLLALVLTCLACALIVLLLDAIAEYFLTMKDMKMDKEEVKREMKEQEGNPEVKSKRREVHMEILSEQVKSDIENSRLIVANPTHITIGIYFKPELMPIPMISVYETNQRALAVRAYAEKVGVPVIVDIKLARSLFKTHRRYDLVSLEEIDEVLRLLVWLEEVENAGKDVIQPQENEVRH
-
 On BLAST, this amino acid sequence resulted in finding "type III secretion system protein SpaS[Salmonella enterica]" that ranges from being 100% to 57% identical.
+Codes for protein secretion (controlled).
 
 MGIFASAGCGKTMLMHMLIEQTEADVFVIGLIGERGREVTEFVDMLRASHKKEKCVLVFATSDFPSVDRCNAAQLATTVAEYFRDQGKRVVLFIDSMTRYARALRDVALASGERPARRGYPASVFDNLPRLLERPGATSEGSITAFYTVLLESEEEADPMADEIRSILDGHLYLSRKLAGQGHYPAIDVLKSVSRVFGQVTTPTHAEQASAVRKLMTRLEELQLFIDLGEYRPGENIDNDRAMQMRDSLKAWLCQPVAQYSSFDDTLSGMNAFADQN
-
 On BLAST, this amino acid sequence resulted in finding "surface presentation of antigens [Salmonella enterica]", "ATP synthase SpaL [Salmonella enterica]", and "
 flagellum-specific ATP synthase [Salmonella enterica]" that ranges from being 100% to 67% identical.
-
+Necessary for efficient entry of bacteria into cultured epithelial cells. "Probable catalytic subunit of a protein translocase. May energize the protein export apparatus encoded in the inv locus which is required for the surface presentation of determinants needed for the entry of salmonella species into mammalian cells."
 
 MFYALYFEIHHLVASAALGFARVAPIFFFLPFLNSGVLSGAPRNAIIILVALGVWPHALNEAPPFLSVAMIPLVLQEAAVGVMLGCLLSWPFWVMHALGCIIDNQRGATLSSSIDPANGIDTSEMANFLNMFAAVVYLQNGGLVTMVDVLNKSYQLCDPMNECTPSLPPLLTFINQVAQNALVLASPVVLVLLLSEVFLGLLSRFAPQMNAFAISLTVKSGIAVLIMLLYFSPVLPDNVLRLSFQATGLSSWFYERGATHVLE
-
-On BLAST, this amino acid sequence resulted in finding "type III secretion system protein SpaR [Salmonella enterica]"" that ranges from being 100% to 46% identical.
+On BLAST, this amino acid sequence resulted in finding "type III secretion system protein SpaR [Salmonella enterica]" that ranges from being 100% to 46% identical.
+Has protein targeting function.
