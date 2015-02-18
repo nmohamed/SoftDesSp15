@@ -5,11 +5,11 @@ Recursive art project for SoftDes 2015
 
 import random
 from PIL import Image
-from math import pi, sin, cos
+from math import pi, sin, cos, log
 from random import randint
 
 
-def build_random_function(f, min_depth, max_depth):
+def build_random_function(min_depth, max_depth):
     """ Builds a random function of depth at least min_depth and depth
         at most max_depth (see assignment writeup for definition of depth
         in this context)
@@ -20,10 +20,10 @@ def build_random_function(f, min_depth, max_depth):
                  (see assignment writeup for details on the representation of
                  these functions)
     """
-    a = []
+    f = []
 
     if min_depth <= 0:
-        t = randint(1, 6)
+        t = randint(1, 8)
         if t == 1:
             return ["x"]
         elif t == 2:
@@ -36,28 +36,42 @@ def build_random_function(f, min_depth, max_depth):
             return ["sin_pi", ["x"]]
         elif t == 6:
             return ["sin_pi", ["y"]]
+        elif t == 7:
+            return ["log", ["y"]]
+        elif t == 8:
+            return ["log", ["x"]]
+        elif t == 9:
+            return ["sqr", ["y"]]
+        elif t == 10:
+            return ["sqr", ["x"]]
 
-    t = randint(1, 4)
+    t = randint(1, 6)
 
     if t == 1:
         f.append("prod")
-        f.append(build_random_function(a, min_depth - 1, max_depth-1))
-        f.append(build_random_function(a, min_depth - 1, max_depth-1))
+        f.append(build_random_function(min_depth - 1, max_depth-1))
+        f.append(build_random_function(min_depth - 1, max_depth-1))
         return f
     elif t == 2:
-        cp = []
-        cp.append("cos_pi")
-        cp.append(build_random_function(a, min_depth - 1, max_depth - 1))
-        return cp
+        f.append("cos_pi")
+        f.append(build_random_function(min_depth - 1, max_depth - 1))
+        return f
     elif t == 3:
-        sp = []
-        sp.append("sin_pi")
-        sp.append(build_random_function(a, min_depth - 1, max_depth - 1))
-        return sp
-    if t == 4:
+        f.append("sin_pi")
+        f.append(build_random_function(min_depth - 1, max_depth - 1))
+        return f
+    elif t == 4:
         f.append("avg")
-        f.append(build_random_function(a, min_depth - 1, max_depth-1))
-        f.append(build_random_function(a, min_depth - 1, max_depth-1))
+        f.append(build_random_function(min_depth - 1, max_depth-1))
+        f.append(build_random_function(min_depth - 1, max_depth-1))
+        return f
+    elif t == 5:
+        f.append("log")
+        f.append(build_random_function(min_depth - 1, max_depth - 1))
+        return f
+    elif t == 6:
+        f.append("sqr")
+        f.append(build_random_function(min_depth - 1, max_depth - 1))
         return f
 
 def evaluate_random_function(f, x, y):
@@ -96,9 +110,16 @@ def evaluate_random_function(f, x, y):
         a = evaluate_random_function(f[1], x, y)
         b = evaluate_random_function(f[2], x, y)
         return .5 * (a + b)
+    elif f[0] == "log":
+        a = evaluate_random_function(f[1], x, y)
+        if a == 0 or a <= 1:
+            a = 2
+        return log(abs(a))
+    elif f[0] == "sqr":
+        a = evaluate_random_function(f[1], x, y)
+        return a**2
 
 #evaluate_random_function(["avg", ["y"], ["prod", ["y"], ["prod", ["cos_pi", ["x"]], ["y"]]]], 1, 2)
-f = build_random_function([], 7, 9)
 
 def remap_interval(val, input_interval_start, input_interval_end, output_interval_start, output_interval_end):
     """ Given an input value in the interval [input_interval_start,
@@ -178,9 +199,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function([], 1, 12)
-    green_function = build_random_function([], 1, 19)
-    blue_function = build_random_function([], 7, 3)
+    red_function = build_random_function(7, 12)
+    green_function = build_random_function(5, 19)
+    blue_function = build_random_function(4, 7)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
@@ -205,7 +226,7 @@ if __name__ == '__main__':
     # Create some computational art!
     # TODO: Un-comment the generate_art function call after you
     #       implement remap_interval and evaluate_random_function
-    generate_art("example4.png")
+    generate_art("3.png")
 
     # Test that PIL is installed correctly
     # TODO: Comment or remove this function call after testing PIL install
