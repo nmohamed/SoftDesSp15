@@ -31,3 +31,5 @@ for page in buzzfeed:
 text_file = open("buzzfeed_titles.txt", "w")
 text_file.write(titles)
 text_file.close()
+
+#use http://www.buzzfeed.com/archive/2014/1/2 !!!
