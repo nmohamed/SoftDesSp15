@@ -150,4 +150,4 @@ if __name__ == '__main__':
     import doctest
     # doctest.testmod()
 
-    do_everything("buzzfeed_titles.txt", 1, 50, True)
+    do_everything("buzzfeed_titles.txt", 1, 50, False)
