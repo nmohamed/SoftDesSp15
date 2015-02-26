@@ -13,8 +13,7 @@ def build_random_function(depth):
         at most max_depth (see assignment writeup for definition of depth
         in this context)
 
-        min_depth: the minimum depth of the random function
-        max_depth: the maximum depth of the random function
+        depth: the depth of the random function
         returns: the randomly generated function represented as a nested list
                  (see assignment writeup for details on the representation of
                  these functions)
@@ -191,16 +190,16 @@ def test_image(filename, x_size=350, y_size=350):
     im.save(filename)
 
 
-def generate_art(filename, x_size=350, y_size=350):
+def generate_art(filename, x_size=1920, y_size=1080):
     """ Generate computational art and save as an image file.
 
         filename: string filename for image (should be .png)
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(randint(4, 7))
-    green_function = build_random_function(randint(4, 7))
-    blue_function = build_random_function(randint(4, 7))
+    red_function = build_random_function(randint(7, 9))
+    green_function = build_random_function(randint(7, 9))
+    blue_function = build_random_function(randint(7, 9))
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
