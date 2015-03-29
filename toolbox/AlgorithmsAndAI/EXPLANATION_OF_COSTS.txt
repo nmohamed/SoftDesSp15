@@ -1,0 +1,7 @@
+EXPLANATION:
+
+G-cost: Number of tiles away you are from the first tile you started from. If you move one tile, then that tile you moved to has G-cost of 1. The next tile is 2, and so on.
+H-cost: estimated distance from goal. Is # of tiles away that tile is from the goal, regardless of walls.
+F-cost: sum of G-cost and H-cost
+
+Diagonals, hopping, swamping: in all of these images, it's necessary for Paul to hop, go diagonally, or travel on a swamp.
